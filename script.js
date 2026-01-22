@@ -2,71 +2,67 @@ const generateBtn = document.querySelector('.generate-button');
 const memeTitle = document.querySelector('.meme-title');
 const memeImage = document.querySelector('.meme-image');
 const authorOutput = document.querySelector('.author');
+const downloadBtn = document.querySelector('.download-btn');
+const shareBtn = document.querySelector('.share-button');
+const toast = document.getElementById('toast');
 
-// Store already displayed meme URLs
 const shownMemes = new Set();
 
-async function getMeme() {
-  generateBtn.disabled = true;
-  memeTitle.innerText = 'Loading fresh meme...';
-  authorOutput.innerText = '';
-
-  try {
-    let memeData;
-    let attempts = 0;
-
-    // Retry until we get a new meme (max 5 tries)
-    do {
-      const res = await fetch('https://meme-api.com/gimme');
-      memeData = await res.json();
-      attempts++;
-    } while (shownMemes.has(memeData.url) && attempts < 5);
-
-    // Save meme as shown
-    shownMemes.add(memeData.url);
-
-    memeTitle.innerText = memeData.title;
-    memeImage.src = memeData.url;
-    authorOutput.innerText = `Meme by: ${memeData.author}`;
-
-  } catch (error) {
-    memeTitle.innerText = 'Failed to load meme 😢';
-    console.error(error);
-  } finally {
-    generateBtn.disabled = false;
-  }
+/* Toast */
+function showToast(message) {
+  toast.innerText = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// Initial load
+/* Fetch Meme */
+async function getMeme() {
+  memeTitle.innerText = 'Loading fresh meme...';
+
+  let data;
+  do {
+    const res = await fetch('https://meme-api.com/gimme');
+    data = await res.json();
+  } while (shownMemes.has(data.url));
+
+  shownMemes.add(data.url);
+  memeTitle.innerText = data.title;
+  memeImage.src = data.url;
+  authorOutput.innerText = `Meme by: ${data.author}`;
+}
+
+generateBtn.addEventListener('click', getMeme);
 getMeme();
 
-// Button click
-generateBtn.addEventListener('click', getMeme);
+/* Download  */
+downloadBtn.addEventListener('click', () => {
+  if (!memeImage.src) return;
 
-const shareBtn = document.querySelector('.share-button');
+  const a = document.createElement('a');
+  a.href = memeImage.src;
+  a.download = 'meme.jpg';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
+  showToast('Download completed 📥');
+});
+
+/* Share */
 shareBtn.addEventListener('click', async () => {
   if (!memeImage.src) return;
 
-  const shareData = {
-    title: 'Check out this meme 😄',
-    text: memeTitle.innerText,
-    url: memeImage.src
-  };
-
-  // Use native share if supported (mobile)
   if (navigator.share) {
-    try {
-      await navigator.share(shareData);
-    } catch (err) {
-      console.log('Share cancelled', err);
-    }
+    await navigator.share({
+      title: memeTitle.innerText,
+      url: memeImage.src
+    });
+    showToast('Shared successfully 🚀');
   } else {
-    // Fallback for desktop browsers
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-      memeTitle.innerText + ' ' + memeImage.src
-    )}`;
-
-    window.open(whatsappUrl, '_blank');
+    window.open(
+      `https://api.whatsapp.com/send?text=${encodeURIComponent(memeImage.src)}`,
+      '_blank'
+    );
+    showToast('Opening WhatsApp...');
   }
 });

@@ -9,25 +9,24 @@ body {
   background: #f4f7f8;
 }
 
+/* Meme Box */
 .meme-container {
-  margin-top: 16px;
   max-width: 440px;
-  margin-inline: auto;
-  background-color: #ffffff;
+  margin: auto;
+  background: #fff;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-.meme-container:hover {
-  transform: translateY(-2px);
+/* Meme Content */
+.meme-content {
+  margin-bottom: 25px; /* GAP BETWEEN MEME & BUTTONS */
 }
 
 .meme-title {
-  margin: 0;
   font-size: 22px;
-  font-weight: 700;
+  margin: 0;
 }
 
 .author {
@@ -35,56 +34,83 @@ body {
   color: #555;
 }
 
-button {
-  border: none;
-  font: inherit;
-  padding: 14px 16px;
-  background-color: #069179;
-  color: white;
-  width: 100%;
-  max-width: 440px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-button:hover {
-  background-color: #057c68;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 img {
   width: 100%;
   border-radius: 12px;
   margin: 12px 0;
-  animation: fadeIn 0.4s ease;
 }
 
 img:not([src]) {
   display: none;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Buttons Bottom Area */
+.meme-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
+/* Next Meme Button */
+.generate-button {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* Download Button */
+.Btn {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #d6d6d6;
+  border-radius: 15px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.svgIcon {
+  fill: #444;
+  width: 18px;
+}
+
+/* SHARE */
 .share-button {
-  margin-top: 10px;
-  background-color: #4267B2;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  font-weight: 700;
 }
 
-.share-button:hover {
-  background-color: #365899;
+.share-button:hover,
+.generate-button:hover {
+  background: #f0f0f0;
+}
+
+/* Toast */
+#toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+#toast.show {
+  opacity: 1;
 }

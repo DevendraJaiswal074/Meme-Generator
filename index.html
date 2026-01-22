@@ -10,19 +10,43 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <link rel="icon" type="image/png" sizes="32x32" href="/Assets/Logo2.png">
+
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 
 <body>
-  <button class="generate-button">Next Meme</button>
-  <button class="share-button">Share Meme</button>
 
   <div class="meme-container">
-    <h1 class="meme-title">Click the button to load a meme</h1>
-    <img class="meme-image" alt="Meme image" />
-    <p class="author"></p>
+
+    <!-- Meme Content -->
+    <div class="meme-content">
+      <h1 class="meme-title">Loading meme...</h1>
+      <img class="meme-image" alt="Meme image" />
+      <p class="author"></p>
+    </div>
+
+    <!-- Buttons at Bottom -->
+    <div class="meme-actions">
+
+      <!-- Next Meme -->
+      <button class="generate-button">Next Meme</button>
+
+      <!-- Download -->
+      <button class="Btn download-btn" title="Download Meme">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svgIcon">
+          <path
+            d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v306.8L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+        </svg>
+      </button>
+
+      <!-- Share (Uiverse) -->
+      <button class="share-button">Share</button>
+
+    </div>
   </div>
+  <div id="toast"></div>
 </body>
 
 </html>
